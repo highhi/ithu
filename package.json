@@ -8,10 +8,13 @@
   },
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "cross-env NODE_ENV=production node index.js"
   },
   "dependencies": {
     "body-parser": "1.18.3",
     "express": "4.16.4"
+  },
+  "devDependencies": {
+    "cross-env": "5.2.0"
   }
 }
