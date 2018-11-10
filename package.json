@@ -2,9 +2,13 @@
   "name": "express",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "10.9.0",
+    "yarn": "1.7.0"
+  },
   "license": "MIT",
   "scripts": {
-    "server": "node index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "body-parser": "1.18.3",
