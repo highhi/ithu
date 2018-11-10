@@ -1,5 +1,5 @@
 {
-  "name": "express",
+  "name": "ithu",
   "version": "1.0.0",
   "main": "index.js",
   "engines": {
@@ -8,11 +8,12 @@
   },
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node index.js"
+    "start": "pm2-runtime start ecosystem.config.js --env production"
   },
   "dependencies": {
     "body-parser": "1.18.3",
-    "express": "4.16.4"
+    "express": "4.16.4",
+    "pm2": "3.2.2"
   },
   "devDependencies": {
     "cross-env": "5.2.0"
