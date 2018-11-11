@@ -1,5 +1,5 @@
 const path = require('path')
-const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -68,6 +68,10 @@ const common = {
   },
 
   plugins: [
+    new CopyWebpackPlugin([{
+      from: path.resolve('src', 'stylesheets'),
+      to: path.resolve('dist', 'stylesheets')
+    }]),
     new HtmlWebpackPlugin({
       title: 'iThu',
       filename: '../index.html',

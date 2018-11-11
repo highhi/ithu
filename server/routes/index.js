@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const fetch = require('isomorphic-unfetch')
 const { httpClient } = require('../utils')
 
 router.get('/', async (req, res) => {
