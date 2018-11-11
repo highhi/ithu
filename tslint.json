@@ -1,0 +1,25 @@
+{
+  "rulesDirectory": [
+    "tslint-plugin-prettier"
+  ],
+  "extends": [
+    "tslint-config-standard",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-first"
+      }
+    ],
+    "prettier": [true, {
+      "printWidth": 150,
+      "singleQuote": true,
+      "semi": false,
+      "arrowParens": "always",
+      "trailingComma": "es5"
+    }]
+  }
+}

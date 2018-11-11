@@ -3,16 +3,32 @@
 const { createServer } = require('http')
 const express = require('express')
 const bodyParser = require('body-parser')
+const helmet = require('helmet')
+const routes = require('./routes')
 
 const port = process.env.PORT || 3000
 const app = express()
 
+app.use(helmet())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(express.static('dist'))
+app.use('/api', routes)
 
-app.get('*', (req, res) => {
-  res.status(200).send('hello world')
-})
+// if (process.env.NODE_ENV !== 'production') {
+//   const webpack = require('webpack');
+//   const webpackHotMiddleware = require('webpack-hot-middleware');
+//   const webpackDevMiddleware = require('webpack-dev-middleware');
+//   const config = require('./webpack.config');
+//   const compiler = webpack(config);
+
+//   app.use(webpackHotMiddleware(compiler));
+//   app.use(
+//     webpackDevMiddleware(compiler, {
+//       publicPath: config.output.publicPath
+//     })
+//   );
+// }
 
 const server = createServer(app)
 server.listen(port);
