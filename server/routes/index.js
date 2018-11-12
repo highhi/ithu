@@ -1,10 +1,27 @@
 const router = require('express').Router()
-const { httpClient } = require('../utils')
+const { apiClient } = require('../utils')
 
-router.get('/', async (req, res) => {
-  const result = await httpClient('https://itunes.apple.com/search?term=twitter&media=software&entity=software&country=jp&lang=ja_jp&limit=3')
-  const json = await result.json()
-  res.status(200).json(json)
+router.post('/', async (req, res) => {
+  const { query, category } = req.body
+  const data = await apiClient
+    .get(`https://itunes.apple.com/search?term=${query}&media=music&attribute=${category}&country=jp&lang=ja_jp&limit=1`)
+    .catch((err) => {
+      throw err
+    })
+
+  const items = data.results.map((item) => {
+    return {
+      id: item.trackId,
+      artist: item.artistName,
+      cover: item.artistViewUrl,
+      track: item.trackName,
+      collection: item.collectionName,
+      trackPrice: item.trackPrice,
+      collectionPrice: item.collectionPrice,
+    }
+  })
+
+  res.status(200).json(items)
 })
 
 module.exports = router

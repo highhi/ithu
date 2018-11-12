@@ -3,8 +3,9 @@ import * as React from 'react'
 import { render } from 'react-dom'
 import { Action } from './actions'
 import { App } from './components/App/App'
+import { stores } from './stores'
 
-const action = new Action()
+const action = new Action(stores)
 
 render(
   <Provider action={action}>

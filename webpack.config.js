@@ -57,7 +57,7 @@ const common = {
           test: /[\\/]node_modules[\\/]/,
           chunks: 'all',
           enforce: true,
-          name: 'vendor.bundle'
+          name: 'vendor'
         },
       }
     }

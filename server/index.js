@@ -57,3 +57,5 @@ server.on('error', (err) => {
   }
 })
 
+process.on('unhandledRejection', console.dir);
+

@@ -1,21 +1,21 @@
 import { action, decorate, observable } from 'mobx'
 
 export class ConditionStore {
-  query = ''
-  category = ''
+  term = ''
+  attribute = ''
 
-  setQuery = (query: string) => {
-    this.query = query
+  setTerm = (term: string) => {
+    this.term = term
   }
 
-  setCategory = (category: string) => {
-    this.category = category
+  setAttribute = (attribute: string) => {
+    this.attribute = attribute
   }
 }
 
 decorate(ConditionStore, {
-  query: observable.ref,
-  category: observable.ref,
-  setQuery: action,
-  setCategory: action,
+  term: observable.ref,
+  attribute: observable.ref,
+  setTerm: action,
+  setAttribute: action,
 })

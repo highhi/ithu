@@ -11,6 +11,7 @@
   <link rel="preload" href="//fonts.googleapis.com/css?family=Lato" as="css">
   <link rel="preload" href="/stylesheets/style.css" as="css">
   <link rel="preload" href="/<%= htmlWebpackPlugin.files.chunks.runtime.entry %>" as="script">
+  <link rel="preload" href="<%= htmlWebpackPlugin.files.chunks.vendor.entry %>" as="script">
   <link rel="preload" href="<%= htmlWebpackPlugin.files.chunks.main.entry %>" as="script">
   <link href="//fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet">
   <link href="//fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -19,6 +20,7 @@
 <body>
   <div id="app"></div>
   <script src="/<%= htmlWebpackPlugin.files.chunks.runtime.entry %>" defer></script>
+  <script src="/<%= htmlWebpackPlugin.files.chunks.vendor.entry %>" defer></script>
   <script src="/<%= htmlWebpackPlugin.files.chunks.main.entry %>" defer></script>
 </body>
 </html>

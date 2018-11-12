@@ -1,11 +1,16 @@
-import { observer } from 'mobx-react'
 import * as React from 'react'
 import styled from 'styled-components'
 import { ConditionStore } from '../../stores/ConditionStore'
 import { Category } from '../Category/Category'
 
-type Props = {
+export type OuterProps = {
   store: ConditionStore
+}
+
+export type InnerProps = OuterProps & {
+  onChangeTerm(event: React.FormEvent<HTMLInputElement>): void
+  onChangeAttribute(event: React.FormEvent<HTMLInputElement>): void
+  onSubmit(event: React.FormEvent<HTMLFormElement>): void
 }
 
 const Form = styled.form``
@@ -19,22 +24,22 @@ const Input = styled.input`
   background: #fff;
 `
 
-export const ConditionForm = observer<React.SFC<Props>>(({ store }) => {
+export const ConditionForm: React.SFC<InnerProps> = ({ store, onChangeTerm, onChangeAttribute, onSubmit }) => {
   return (
-    <Form>
-      <Input className="queryField" type="text" value={store.query} />
-      <Category cateogry="all" checked={store.category === 'all'}>
+    <Form onSubmit={onSubmit}>
+      <Input className="queryField" name="query" type="text" value={store.term} onChange={onChangeTerm} />
+      <Category category="" checked={!store.attribute} onChange={onChangeAttribute}>
         ALL
       </Category>
-      <Category cateogry="artist" checked={store.category === 'artist'}>
+      <Category category="artistTerm" checked={store.attribute === 'artistTerm'} onChange={onChangeAttribute}>
         Artist
       </Category>
-      <Category cateogry="track" checked={store.category === 'track'}>
+      <Category category="songTerm" checked={store.attribute === 'songTerm'} onChange={onChangeAttribute}>
         Track
       </Category>
-      <Category cateogry="collection" checked={store.category === 'collection'}>
+      <Category category="albumTerm" checked={store.attribute === 'albumTerm'} onChange={onChangeAttribute}>
         Collection
       </Category>
     </Form>
   )
-})
+}
