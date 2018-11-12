@@ -3,9 +3,9 @@ import { compose, withHandlers } from 'recompose'
 import { Action } from '../../actions'
 import { ConditionForm as Form, InnerProps, OuterProps } from '../../components/ConditionForm/ConditionForm'
 
-const enhance = compose<InnerProps, OuterProps>(
+const enhance = compose<InnerProps & OuterProps, OuterProps>(
   inject('action'),
-  withHandlers<{ action: Action }, {}>({
+  withHandlers<{ action: Action }, InnerProps>({
     onChangeTerm: ({ action }) => (event: React.FormEvent<HTMLInputElement>) => {
       const query = event.currentTarget.value.trim()
       action.changeTerm(query)

@@ -7,7 +7,7 @@ export type OuterProps = {
   store: ConditionStore
 }
 
-export type InnerProps = OuterProps & {
+export type InnerProps = {
   onChangeTerm(event: React.FormEvent<HTMLInputElement>): void
   onChangeAttribute(event: React.FormEvent<HTMLInputElement>): void
   onSubmit(event: React.FormEvent<HTMLFormElement>): void
@@ -24,7 +24,7 @@ const Input = styled.input`
   background: #fff;
 `
 
-export const ConditionForm: React.SFC<InnerProps> = ({ store, onChangeTerm, onChangeAttribute, onSubmit }) => {
+export const ConditionForm: React.SFC<InnerProps & OuterProps> = ({ store, onChangeTerm, onChangeAttribute, onSubmit }) => {
   return (
     <Form onSubmit={onSubmit}>
       <Input className="queryField" name="query" type="text" value={store.term} onChange={onChangeTerm} />

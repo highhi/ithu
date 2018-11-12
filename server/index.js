@@ -13,7 +13,24 @@ app.use(helmet())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static('dist'))
-app.use('/api', routes)
+app.use(routes)
+
+app.use((err, _req, _res, next) => {
+  console.error(err.stack);
+  next(err)
+})
+
+app.use((err, req, res, next) => {
+  if (req.xhr) {
+    return res.status(500).send({ error: 'Something failed!' });
+  }
+  next(err)
+})
+
+app.use((err, _req, res, _next) => {
+  res.status(500).send({ error: err });
+})
+
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const webpack = require('webpack');
@@ -57,5 +74,5 @@ server.on('error', (err) => {
   }
 })
 
-process.on('unhandledRejection', console.dir);
+// process.on('unhandledRejection', console.dir);
 

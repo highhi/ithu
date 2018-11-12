@@ -24,7 +24,7 @@ export class Action {
 
   submitCondition = async (params: ConditionPrams) => {
     const data = await apiClient
-      .post('', {
+      .post('/music', {
         query: encodeURIComponent(params.query),
         category: encodeURIComponent(params.category),
       })
