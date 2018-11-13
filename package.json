@@ -13,7 +13,7 @@
     "dev:server": "cross-env NODE_ENV=development nodemon ./server/index.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts{,x}' --fix",
     "prod:build": "cross-env NODE_ENV=production webpack",
-    "heroku-postbuild": "yarn prod:build"
+    "postinstall": "yarn prod:build"
   },
   "dependencies": {
     "@types/recompose": "0.27.0",
