@@ -79,7 +79,7 @@ const common = {
     new HtmlWebpackPlugin({
       title: 'iThu',
       filename: '../index.html',
-      template: 'src/index.html',
+      template: path.resolve('src', 'index.html'),
       inject: false
     })
   ]
