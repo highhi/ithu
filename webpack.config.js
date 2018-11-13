@@ -30,6 +30,10 @@ const config = isProd ? require('./webpack.prod.config') : require('./webpack.de
 const common = {
   mode: isProd ? 'production' : 'development',
 
+  entry: {
+    main: path.resolve(__dirname, 'src', 'javascripts', 'index.tsx'),
+  },
+
   output: {
     path: path.resolve(__dirname, DIST),
     filename: '[name].js'

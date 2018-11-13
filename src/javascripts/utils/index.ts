@@ -9,13 +9,9 @@ export const apiClient = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+    }).then((res) => {
+      if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`)
+      return res.json()
     })
-      .then((res) => {
-        if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`)
-        return res
-      })
-      .then((res) => {
-        return res.json()
-      })
   },
 }
