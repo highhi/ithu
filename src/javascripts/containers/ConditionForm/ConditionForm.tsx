@@ -1,20 +1,23 @@
 import { inject, observer } from 'mobx-react'
-import { compose, withHandlers } from 'recompose'
-import { Action } from '../../actions'
-import { ConditionForm as Form, InnerProps, OuterProps } from '../../components/ConditionForm/ConditionForm'
+import { compose, withHandlers, withProps } from 'recompose'
+import { action } from '../../actions'
+import { ConditionForm as Form, Handlers, InnerProps } from '../../components/ConditionForm/ConditionForm'
+import { stores } from '../../stores'
 
-const enhance = compose<InnerProps & OuterProps, OuterProps>(
-  inject('action'),
-  withHandlers<{ action: Action }, InnerProps>({
-    onChangeTerm: ({ action }) => (event: React.FormEvent<HTMLInputElement>) => {
+const enhance = compose<InnerProps, {}>(
+  withProps(() => ({
+    store: stores.conditionStore,
+  })),
+  withHandlers<{}, Handlers>({
+    onChangeTerm: () => (event: React.FormEvent<HTMLInputElement>) => {
       const query = event.currentTarget.value.trim()
       action.changeTerm(query)
     },
-    onChangeAttribute: ({ action }) => (event: React.FormEvent<HTMLInputElement>) => {
+    onChangeAttribute: () => (event: React.FormEvent<HTMLInputElement>) => {
       const query = event.currentTarget.value
       action.changeAttribute(query)
     },
-    onSubmit: ({ action }) => (event: React.FormEvent<HTMLFormElement>) => {
+    onSubmit: () => (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
       const formData = new FormData(event.currentTarget)
       action.submitCondition({

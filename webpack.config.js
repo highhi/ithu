@@ -1,10 +1,10 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const merge = require('webpack-merge')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin');
 
-const SRC = path.resolve(__dirname, 'src', 'javascripts')
-const DIST = path.resolve(__dirname, 'dist', 'javascripts')
+const SRC = path.resolve(__dirname, 'src')
+const DIST = path.resolve(__dirname, 'dist')
 
 const isProd = process.env.NODE_ENV === 'production'
 const config = isProd ? require('./webpack.prod.config') : require('./webpack.dev.config')
@@ -27,11 +27,15 @@ const config = isProd ? require('./webpack.prod.config') : require('./webpack.de
 //   ]
 // }
 
+function js(filename) {
+  return `javascripts/${filename}`
+}
+
 const common = {
   mode: isProd ? 'production' : 'development',
 
   entry: {
-    main: path.resolve(__dirname, 'src', 'javascripts', 'index.tsx'),
+    [js('main')]: path.resolve(SRC, 'javascripts', 'index.tsx'),
   },
 
   output: {
@@ -53,7 +57,7 @@ const common = {
 
   optimization: {
     runtimeChunk: {
-      name: 'runtime'
+      name: js('runtime')
     },
     splitChunks: {
       cacheGroups: {
@@ -61,8 +65,14 @@ const common = {
           test: /[\\/]node_modules[\\/]/,
           chunks: 'all',
           enforce: true,
-          name: 'vendor'
+          name: js('vendor')
         },
+        vendors: {
+          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+          name: js('react'),
+          priority: 1,
+          chunks: 'all',
+        }
       }
     }
   },
@@ -73,14 +83,11 @@ const common = {
 
   plugins: [
     new CopyWebpackPlugin([{
-      from: path.resolve('src', 'stylesheets'),
-      to: path.resolve('dist', 'stylesheets')
+      from: path.resolve(SRC, 'stylesheets', 'style.css'),
+      to: path.resolve(DIST, 'stylesheets', '[name].css')
     }]),
-    new HtmlWebpackPlugin({
-      title: 'iThu',
-      filename: '../index.html',
-      template: path.resolve('src', 'index.html'),
-      inject: false
+    new ManifestPlugin({
+      fileName: path.resolve(__dirname, 'server', 'manifest.json')
     })
   ]
 }

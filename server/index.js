@@ -1,15 +1,20 @@
 'use strict'
 
+const path = require('path')
 const { createServer } = require('http')
 const express = require('express')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
+const compression = require('compression')
 const routes = require('./routes')
 
 const port = process.env.PORT || 3000
 const app = express()
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug')
 app.use(helmet())
+app.use(compression())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static('dist'))
@@ -22,13 +27,13 @@ app.use((err, _req, _res, next) => {
 
 app.use((err, req, res, next) => {
   if (req.xhr) {
-    return res.status(500).send({ error: 'Something failed!' });
+    return res.status(err.status).send(err.message)
   }
   next(err)
 })
 
 app.use((err, _req, res, _next) => {
-  res.status(500).send({ error: err });
+  res.status(err.status || 500).send(err.message)
 })
 
 

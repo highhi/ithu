@@ -6,7 +6,7 @@ import { stores } from '../../stores'
 export const App = () => {
   return (
     <div>
-      <ConditionForm store={stores.conditionStore} />
+      <ConditionForm />
       <List store={stores.listStore} />
     </div>
   )

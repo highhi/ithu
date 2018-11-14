@@ -1,4 +1,5 @@
 node_modules/
 .DS_Store
 yarn-error.log
-dist/ 
+dist/
+server/manifest.json
