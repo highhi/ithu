@@ -1,4 +1,4 @@
-import { Stores, stores } from '../stores'
+import { stores, Stores } from '../stores'
 import { ItemStore, ItemStoreParams } from '../stores/ItemStore'
 import { apiClient } from '../utils'
 

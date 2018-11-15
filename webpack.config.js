@@ -84,7 +84,8 @@ const common = {
   plugins: [
     new CopyWebpackPlugin([{
       from: path.resolve(SRC, 'stylesheets', 'style.css'),
-      to: path.resolve(DIST, 'stylesheets', '[name].css')
+      to: path.resolve(DIST, 'stylesheets', '[name].css'),
+      force: true,
     }]),
     new ManifestPlugin({
       fileName: path.resolve(__dirname, 'server', 'manifest.json')
