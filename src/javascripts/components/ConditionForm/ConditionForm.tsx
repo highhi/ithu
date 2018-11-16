@@ -38,7 +38,7 @@ export const ConditionForm: React.SFC<InnerProps> = ({ store, onChangeTerm, onCh
           <Input className="queryField" name="query" type="text" value={store.term} onChange={onChangeTerm} />
         </GridCell>
         <GridCell area="cat1">
-          <Category category="" checked={!store.attribute} onChange={onChangeAttribute}>
+          <Category category="all" checked={!store.attribute} onChange={onChangeAttribute}>
             ALL
           </Category>
         </GridCell>

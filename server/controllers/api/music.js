@@ -3,7 +3,8 @@ const cacheStore = require('../../utils/cacheStore')
 
 exports.serach = async (req, res, next) => {
   try {
-    const { query, category } = req.params
+    const query = req.params.query
+    const category = req.params.category === 'all' ? '' : req.params.category
     const key = createKey(query, category)
     const cache = await cacheStore.get(key)
 
