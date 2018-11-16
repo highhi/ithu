@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  cache_store:
+    image: redis:latest
+    container_name: ithu-redis-cache-store
+    volumes:
+      - .data/cache_store:/data
+    ports:
+      - 6379:6379

@@ -1,4 +1,4 @@
-import { stores, Stores } from '../stores'
+import { stores } from '../stores'
 import { ItemStore, ItemStoreParams } from '../stores/ItemStore'
 import { apiClient } from '../utils'
 
@@ -17,16 +17,13 @@ export const action = {
   },
 
   async submitCondition(params: ConditionParams) {
-    const data = await apiClient
-      .post('/music', {
-        query: encodeURIComponent(params.query),
-        category: encodeURIComponent(params.category),
-      })
-      .catch((err) => {
-        throw err
-      })
-
-    stores.listStore.setItems(createItems(data))
+    try {
+      const { query, category } = params
+      const data = await apiClient.get(`/music/${encodeURIComponent(query)}/${encodeURIComponent(category)}`)
+      stores.listStore.setItems(createItems(data))
+    } catch (err) {
+      console.error(err)
+    }
   },
 }
 

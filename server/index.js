@@ -1,41 +1,41 @@
 'use strict'
 
+require('dotenv').config()
 const path = require('path')
 const { createServer } = require('http')
 const express = require('express')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
 const compression = require('compression')
-const routes = require('./routes')
+const session = require('express-session')
+const csurf = require('csurf')
+const logger = require('morgan')
+const router = require('./router')
 
 const port = process.env.PORT || 3000
 const app = express()
+const sessionOptions = {
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    //secure: true,
+    httpOnly: true,
+    domain: process.env.HOST,
+  }
+}
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug')
+app.use(logger('dev'))
 app.use(helmet())
 app.use(compression())
-app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(session(sessionOptions))
+app.use(csurf())
 app.use(express.static('dist'))
-app.use(routes)
-
-app.use((err, _req, _res, next) => {
-  console.error(err.stack);
-  next(err)
-})
-
-app.use((err, req, res, next) => {
-  if (req.xhr) {
-    return res.status(err.status).send(err.message)
-  }
-  next(err)
-})
-
-app.use((err, _req, res, _next) => {
-  res.status(err.status || 500).send(err.message)
-})
-
+router(app)
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const webpack = require('webpack');

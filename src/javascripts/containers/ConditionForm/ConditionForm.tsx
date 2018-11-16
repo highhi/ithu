@@ -1,4 +1,4 @@
-import { inject, observer } from 'mobx-react'
+import { observer } from 'mobx-react'
 import { compose, withHandlers, withProps } from 'recompose'
 import { action } from '../../actions'
 import { ConditionForm as Form, Handlers, InnerProps } from '../../components/ConditionForm/ConditionForm'
