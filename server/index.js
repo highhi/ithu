@@ -78,6 +78,3 @@ server.on('error', (err) => {
       throw err;
   }
 })
-
-// process.on('unhandledRejection', console.dir);
-
