@@ -5,7 +5,6 @@ export class AudioStore {
   previewUrl = ''
 
   setTrack = (previewUrl: string, trackId: number) => {
-    console.log(this.trackId === trackId)
     if (this.trackId === trackId) {
       this.trackId = 0
       this.previewUrl = ''

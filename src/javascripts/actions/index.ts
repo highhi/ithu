@@ -22,7 +22,6 @@ export const action = {
   async submitCondition(params: ConditionParams) {
     try {
       const { query, category } = params
-      console.log(category)
       const items = await apiClient.get(`/music/${encodeURIComponent(query)}/${encodeURIComponent(category)}`)
       stores.musicStore.setItems(items)
     } catch (err) {
