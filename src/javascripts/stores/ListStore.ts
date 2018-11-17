@@ -1,10 +1,20 @@
 import { action, decorate, observable } from 'mobx'
-import { ItemStoreParams } from './ItemStore'
+
+export type ItemParams = {
+  id: number
+  cover: string
+  track: string
+  artist: string
+  collection: string
+  trackPrice: string
+  collectionPrice: string
+  previewUrl: string
+}
 
 export class ListStore {
-  items: ItemStoreParams[] = []
+  items: ItemParams[] = []
 
-  setItems = (items: ItemStoreParams[]) => {
+  setItems = (items: ItemParams[]) => {
     this.items = items
   }
 }

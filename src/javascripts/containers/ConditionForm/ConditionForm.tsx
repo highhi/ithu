@@ -6,7 +6,7 @@ import { stores } from '../../stores'
 
 const enhance = compose<InnerProps, {}>(
   withProps(() => ({
-    store: stores.conditionStore,
+    store: stores.musicStore,
   })),
   withHandlers<{}, Handlers>({
     onChangeTerm: () => (event: React.FormEvent<HTMLInputElement>) => {

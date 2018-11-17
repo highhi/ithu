@@ -5,6 +5,8 @@ type Props = {
   columns?: string[]
   areas?: string[]
   columnGap?: string
+  rowGap?: string
+  alignItems?: string
 }
 
 function join(arg?: string[]): string | undefined {
@@ -17,5 +19,7 @@ export const Grid = styled.div<Props>`
   grid-template-rows: ${(props) => join(props.rows)};
   grid-template-columns: ${(props) => join(props.columns)};
   grid-template-areas: "${(props) => join(props.areas)}";
-  column-gap: ${(props) => props.columnGap}
+  align-items: ${(props) => props.alignItems};
+  column-gap: ${(props) => props.columnGap};
+  row-gap: ${(props) => props.rowGap};
 `

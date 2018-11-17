@@ -7,7 +7,7 @@ export const App = () => {
   return (
     <>
       <Header />
-      <List store={stores.listStore} />
+      <List store={stores.musicStore} />
     </>
   )
 }

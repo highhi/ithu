@@ -3,8 +3,7 @@ const cacheStore = require('../../utils/cacheStore')
 
 exports.serach = async (req, res, next) => {
   try {
-    const query = req.params.query
-    const category = req.params.category === 'all' ? '' : req.params.category
+    const { query, category = '' } = req.params
     const key = createKey(query, category)
     const cache = await cacheStore.get(key)
 
@@ -29,15 +28,16 @@ function createEndPoint(query, category) {
 }
 
 function createItems(items) {
-  return items.map((item) => {
+  return items.map(item => {
     return {
       id: item.trackId,
       artist: item.artistName,
-      cover: item.artistViewUrl,
+      cover: item.artworkUrl60,
       track: item.trackName,
       collection: item.collectionName,
       trackPrice: item.trackPrice,
       collectionPrice: item.collectionPrice,
+      previewUrl: item.previewUrl
     }
   })
 }
