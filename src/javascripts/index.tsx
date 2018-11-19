@@ -1,5 +1,13 @@
+import { Router } from '@reach/router'
 import * as React from 'react'
 import { render } from 'react-dom'
-import { App } from './components/layouts/App/App'
+import Login from './components/pages/Login/Login'
+import Music from './components/pages/Music/Music'
 
-render(<App />, document.getElementById('app') as HTMLElement)
+render(
+  <Router>
+    <Music path="/" />
+    <Login path="login" />
+  </Router>,
+  document.getElementById('app') as HTMLElement
+)
