@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import { compose, withHandlers, withProps } from 'recompose'
 import { action } from '../../actions'
-import ConditionForm, { Handlers, InnerProps } from '../../components/ConditionForm/ConditionForm'
+import ConditionForm, { Handlers, InnerProps } from '../../components/contexts/ConditionForm/ConditionForm'
 import { stores } from '../../stores'
 
 export default compose<InnerProps, {}>(

@@ -22,11 +22,6 @@ export const action = {
     const current = stores.musicStore.currentTrack()
     const next = stores.musicStore.itemMap.get(nextTrackId) as ItemStore
 
-    if (!current) {
-      next.togglePlay()
-      return stores.musicStore.setTrackId(next.id)
-    }
-
     if (current.id === next.id) {
       next.togglePlay()
       return stores.musicStore.setTrackId(-1)

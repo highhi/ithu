@@ -1,9 +1,9 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { MusicStore } from '../../stores/MusicStore'
-import { Category } from '../Category/Category'
-import { GridCell } from '../layouts/GirdCell/GridCell'
-import { Grid } from '../layouts/Grid/Grid'
+import { MusicStore } from '../../../stores/MusicStore'
+import { GridCell } from '../../layouts/GirdCell/GridCell'
+import { Grid } from '../../layouts/Grid/Grid'
+import { Category } from '../../selectors/Category/Category'
 
 export type Handlers = {
   onChangeTerm(event: React.FormEvent<HTMLInputElement>): void

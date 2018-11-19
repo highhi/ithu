@@ -1,4 +1,11 @@
 import { observer } from 'mobx-react'
-import { List as ListComponent } from '../../components/List/List'
+import { compose, withProps } from 'recompose'
+import List, { Props } from '../../components/contexts/List/List'
+import { stores } from '../../stores'
 
-export const List = observer(ListComponent)
+export default compose<Props, {}>(
+  withProps(() => ({
+    store: stores.musicStore,
+  })),
+  observer
+)(List)

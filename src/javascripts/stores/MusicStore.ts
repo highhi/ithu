@@ -15,7 +15,7 @@ export type ItemParams = {
 export type ItemMap = Map<number, ItemStore>
 
 const INITIAL_TRACK_ID = -1
-function noop() {
+const noop = () => {
   ''
 }
 
