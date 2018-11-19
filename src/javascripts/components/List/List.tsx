@@ -1,14 +1,14 @@
 import * as React from 'react'
-import { ListStore } from '../../stores/ListStore'
-import { Item } from '../contexts/Item/Item'
+import Item from '../../containers/Item/Item'
+import { MusicStore } from '../../stores/MusicStore'
 
 type Props = {
-  store: ListStore
+  store: MusicStore
 }
 
 export const List: React.SFC<Props> = ({ store }) => {
   const items = store.items.map((item) => {
-    return <Item key={item.id} item={item} />
+    return <Item key={item.id} store={item} />
   })
 
   return <main>{items}</main>

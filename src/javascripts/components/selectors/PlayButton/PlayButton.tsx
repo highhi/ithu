@@ -1,6 +1,5 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { AudioStore } from '../../../stores/AudioStore'
 
 export const Button = styled.button`
   height: 30px;
@@ -11,26 +10,17 @@ export const Button = styled.button`
   padding: 0 14px;
 `
 
-export type InnerProps = {
-  store: AudioStore
-}
-
-export type OuterProps = {
-  previewUrl: string
-  trackId: number
-}
-
-export type Handlers = {
+export type Props = {
+  isPlaying: boolean
   onClick(event: React.FormEvent<HTMLButtonElement>): void
 }
 
-export type Props = InnerProps & OuterProps & Handlers
-
-export const PlayButton: React.SFC<Props> = ({ store, trackId, onClick }) => {
-  const content = store.trackId === trackId ? '■' : '▶︎'
+const PlayButton: React.SFC<Props> = ({ isPlaying, onClick }) => {
   return (
     <Button type="button" onClick={onClick}>
-      {content}
+      {isPlaying ? '■' : '▶︎'}
     </Button>
   )
 }
+
+export default PlayButton

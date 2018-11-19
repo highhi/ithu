@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { ConditionStore } from '../../stores/ConditionStore'
+import { MusicStore } from '../../stores/MusicStore'
 import { Category } from '../Category/Category'
 import { GridCell } from '../layouts/GirdCell/GridCell'
 import { Grid } from '../layouts/Grid/Grid'
@@ -12,7 +12,7 @@ export type Handlers = {
 }
 
 export type InnerProps = Handlers & {
-  store: ConditionStore
+  store: MusicStore
 }
 
 const areas = ['input input input input"', '"cat1 cat2 cat3 cat4']
@@ -30,7 +30,7 @@ const Input = styled.input`
   background: #fff;
 `
 
-export const ConditionForm: React.SFC<InnerProps> = ({ store, onChangeTerm, onChangeAttribute, onSubmit }) => {
+const ConditionForm: React.SFC<InnerProps> = ({ store, onChangeTerm, onChangeAttribute, onSubmit }) => {
   return (
     <Form onSubmit={onSubmit}>
       <Grid areas={areas}>
@@ -61,3 +61,5 @@ export const ConditionForm: React.SFC<InnerProps> = ({ store, onChangeTerm, onCh
     </Form>
   )
 }
+
+export default ConditionForm
