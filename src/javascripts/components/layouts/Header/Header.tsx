@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ConditionForm } from '../../../containers/ConditionForm/ConditionForm'
+import ConditionForm from '../../../containers/ConditionForm/ConditionForm'
 import { SiteName } from '../../selectors/SiteName/SiteName'
 import { Grid } from '../Grid/Grid'
 

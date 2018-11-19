@@ -1,4 +1,6 @@
 import { stores } from '../stores'
+import { ItemStore } from '../stores/ItemStore'
+import { ItemParams } from '../stores/MusicStore'
 import { apiClient } from '../utils'
 
 type ConditionParams = {
@@ -15,17 +17,37 @@ export const action = {
     stores.musicStore.setAttribute(category)
   },
 
-  playMusic(previewUrl: string, trackId: number) {
-    stores.musicStore.setTrack(previewUrl, trackId)
+  // TODO: 条件分岐をもうちょっと綺麗にしたい
+  playMusic(nextTrackId: number) {
+    const current = stores.musicStore.currentTrack()
+    const next = stores.musicStore.itemMap.get(nextTrackId) as ItemStore
+
+    if (!current) {
+      next.togglePlay()
+      return stores.musicStore.setTrackId(next.id)
+    }
+
+    if (current.id === next.id) {
+      next.togglePlay()
+      return stores.musicStore.setTrackId(-1)
+    }
+
+    current.togglePlay()
+    next.togglePlay()
+    stores.musicStore.setTrackId(next.id)
   },
 
   async submitCondition(params: ConditionParams) {
     try {
       const { query, category } = params
       const items = await apiClient.get(`/music/${encodeURIComponent(query)}/${encodeURIComponent(category)}`)
-      stores.musicStore.setItems(items)
+      stores.musicStore.setItems(createItemStores(items))
     } catch (err) {
       console.error(err)
     }
   },
+}
+
+function createItemStores(items: ItemParams[]): ItemStore[] {
+  return items.map((item) => new ItemStore(item))
 }

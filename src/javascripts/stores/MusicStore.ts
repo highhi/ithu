@@ -1,4 +1,5 @@
-import { action, decorate, observable } from 'mobx'
+import { action, computed, decorate, observable } from 'mobx'
+import { ItemStore } from './ItemStore'
 
 export type ItemParams = {
   id: number
@@ -11,14 +12,30 @@ export type ItemParams = {
   previewUrl: string
 }
 
+export type ItemMap = Map<number, ItemStore>
+
 const INITIAL_TRACK_ID = -1
+function noop() {
+  ''
+}
 
 export class MusicStore {
   term = ''
   attribute = ''
-  items: ItemParams[] = []
-  trackId = INITIAL_TRACK_ID
-  previewUrl = ''
+  itemMap: ItemMap = new Map()
+  selectedTrackId = INITIAL_TRACK_ID
+
+  get items(): ItemStore[] {
+    return Array.from(this.itemMap.values())
+  }
+
+  setItems = (items: ItemStore[]) => {
+    this.itemMap = normalize(items)
+  }
+
+  clearItems = () => {
+    this.itemMap.clear()
+  }
 
   setTerm = (term: string) => {
     this.term = term
@@ -28,30 +45,31 @@ export class MusicStore {
     this.attribute = attribute
   }
 
-  setItems = (items: ItemParams[]) => {
-    this.items = items
+  setTrackId = (trackId: number) => {
+    this.selectedTrackId = trackId
   }
 
-  setTrack = (previewUrl: string, trackId: number) => {
-    if (this.trackId === trackId) {
-      this.trackId = INITIAL_TRACK_ID
-      this.previewUrl = ''
-      return
-    }
-
-    this.trackId = trackId
-    this.previewUrl = previewUrl
+  currentTrack = (): { id: number; togglePlay: () => void } => {
+    const itemStore = this.itemMap.get(this.selectedTrackId)
+    if (!itemStore) return { id: INITIAL_TRACK_ID, togglePlay: noop }
+    return itemStore
   }
+}
+
+function normalize(items: ItemStore[]): ItemMap {
+  const newItems = items.map<[number, ItemStore]>((item) => [item.id, item])
+  return new Map(newItems)
 }
 
 decorate(MusicStore, {
   term: observable.ref,
   attribute: observable.ref,
-  items: observable.ref,
-  trackId: observable.ref,
-  previewUrl: observable.ref,
+  itemMap: observable.ref,
+  selectedTrackId: observable.ref,
+  setItems: action,
+  clearItems: action,
   setTerm: action,
   setAttribute: action,
-  setItems: action,
-  setTrack: action,
+  setTrackId: action,
+  items: computed,
 })
