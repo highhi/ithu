@@ -30,11 +30,10 @@ export class MusicStore {
   }
 
   setItems = (items: ItemStore[]) => {
-    this.itemMap = normalize(items)
-  }
-
-  clearItems = () => {
     this.itemMap.clear()
+    for (const item of items) {
+      this.itemMap.set(item.id, item)
+    }
   }
 
   setTerm = (term: string) => {
@@ -56,18 +55,12 @@ export class MusicStore {
   }
 }
 
-function normalize(items: ItemStore[]): ItemMap {
-  const newItems = items.map<[number, ItemStore]>((item) => [item.id, item])
-  return new Map(newItems)
-}
-
 decorate(MusicStore, {
   term: observable.ref,
   attribute: observable.ref,
-  itemMap: observable.ref,
+  itemMap: observable.shallow,
   selectedTrackId: observable.ref,
   setItems: action,
-  clearItems: action,
   setTerm: action,
   setAttribute: action,
   setTrackId: action,
