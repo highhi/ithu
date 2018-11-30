@@ -8,7 +8,6 @@ module.exports = () => {
   const helmet = require('helmet')
   const compression = require('compression')
   const session = require('express-session')
-  const csurf = require('csurf')
   const logger = require('morgan')
   const router = require('./router')
 
@@ -19,7 +18,7 @@ module.exports = () => {
     resave: false,
     saveUninitialized: false,
     cookie: {
-      //secure: true,
+      secure: true,
       httpOnly: true,
       domain: process.env.HOST,
     }
@@ -30,11 +29,9 @@ module.exports = () => {
   app.use(logger('dev'))
   app.use(helmet())
   app.use(compression())
+  app.use(express.static('dist'))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
-  app.use(session(sessionOptions))
-  app.use(csurf())
-  app.use(express.static('dist'))
   router(app)
 
   const server = createServer(app)

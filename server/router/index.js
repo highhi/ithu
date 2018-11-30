@@ -5,7 +5,7 @@ module.exports = (app) => {
   app.use('/favicon.ico', (_, res) => res.status(200).send());
   app.use('/api', apiRouter)
   app.use('*', (req, res) => {
-    res.status(200).render('index', { assets, csrfToken: req.csrfToken() })
+    res.status(200).render('index', { assets })
   })
 
   // errors
@@ -13,7 +13,7 @@ module.exports = (app) => {
     if (err.code !== 'EBADCSRFTOKEN') return next(err)
     res.status(403).send('Invalid CSRF Token')
   })
-  
+
   app.use((err, _req, _res, next) => {
     console.error(err.stack);
     next(err)
