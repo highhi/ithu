@@ -25,6 +25,7 @@
     "dotenv": "6.1.0",
     "express": "4.16.4",
     "express-session": "1.15.6",
+    "firebase": "5.5.9",
     "helmet": "3.15.0",
     "isomorphic-unfetch": "3.0.0",
     "mobx": "5.6.0",
@@ -38,6 +39,7 @@
     "styled-components": "4.0.3"
   },
   "devDependencies": {
+    "@types/firebase": "3.2.1",
     "@types/reach__router": "1.2.2",
     "@types/react": "16.7.2",
     "@types/react-dom": "16.0.9",
