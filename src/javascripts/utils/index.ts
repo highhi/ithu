@@ -14,14 +14,12 @@ export const apiClient = {
 
   post(path: string = '', body: object) {
     const error = new Error()
-    const csrfToken = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content
     return fetch(`/api${path}`, {
       credentials: 'same-origin',
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
         Accept: 'application/json',
-        'X-CSRF-Token': csrfToken,
         'Content-Type': 'application/json',
       },
     }).then((res) => {
