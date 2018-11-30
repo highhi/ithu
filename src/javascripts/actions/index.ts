@@ -1,3 +1,4 @@
+import firebase from '../libs/firebase'
 import { stores } from '../stores'
 import { ItemStore } from '../stores/ItemStore'
 import { ItemParams } from '../stores/MusicStore'
@@ -37,6 +38,15 @@ export const action = {
       const { query, category } = params
       const items = await apiClient.get(`/music/${encodeURIComponent(query)}/${encodeURIComponent(category)}`)
       stores.musicStore.setItems(createItemStores(items))
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  async logout() {
+    try {
+      await firebase.auth().signOut()
+      stores.userStore.logout()
     } catch (err) {
       console.error(err)
     }
