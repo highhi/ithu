@@ -1,7 +1,8 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const merge = require('webpack-merge')
-const ManifestPlugin = require('webpack-manifest-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin')
+const Dotenv = require('dotenv-webpack')
 
 const SRC = path.resolve(__dirname, 'src')
 const DIST = path.resolve(__dirname, 'dist')
@@ -89,7 +90,8 @@ const common = {
     }]),
     new ManifestPlugin({
       fileName: path.resolve(__dirname, 'server', 'manifest.json')
-    })
+    }),
+    new Dotenv()
   ]
 }
 
