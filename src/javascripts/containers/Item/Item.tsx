@@ -1,11 +1,15 @@
-import { observer } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 import { compose, withHandlers } from 'recompose'
-import { action } from '../../actions'
+import { Action } from '../../actions'
 import Item, { Handlers, OuterProps, Props } from '../../components/contexts/Item/Item'
+import { InjectProps } from '../../types'
 
 export default compose<Props, OuterProps>(
-  withHandlers<OuterProps, Handlers>({
-    onClick: ({ store }) => (event: React.FormEvent<HTMLButtonElement>) => {
+  inject<InjectProps, {}, any, {}>(({ action }) => ({
+    action,
+  })),
+  withHandlers<OuterProps & { action: Action }, Handlers>({
+    onClick: ({ store, action }) => (event: React.FormEvent<HTMLButtonElement>) => {
       event.preventDefault()
       action.playMusic(store.id)
     },

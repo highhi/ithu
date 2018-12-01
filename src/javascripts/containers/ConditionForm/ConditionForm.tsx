@@ -1,25 +1,25 @@
-import { observer } from 'mobx-react'
-import { compose, withHandlers, withProps } from 'recompose'
-import { action } from '../../actions'
+import { inject, observer } from 'mobx-react'
+import { compose, withHandlers } from 'recompose'
+import { Action } from '../../actions'
 import ConditionForm, { Handlers, InnerProps } from '../../components/contexts/ConditionForm/ConditionForm'
-import { stores } from '../../stores'
 
 export default compose<InnerProps, {}>(
-  withProps(() => ({
-    store: stores.musicStore,
+  inject(({ stores, action }) => ({
+    musicStore: stores.musicStore,
+    action,
   })),
-  withHandlers<{}, Handlers>({
-    onChangeTerm: () => (event: React.FormEvent<HTMLInputElement>) => {
+  withHandlers<{ action: Action }, Handlers>({
+    onChangeTerm: ({ action }) => (event: React.FormEvent<HTMLInputElement>) => {
       const query = event.currentTarget.value.trim()
       action.changeTerm(query)
     },
 
-    onChangeAttribute: () => (event: React.FormEvent<HTMLInputElement>) => {
+    onChangeAttribute: ({ action }) => (event: React.FormEvent<HTMLInputElement>) => {
       const query = event.currentTarget.value
       action.changeAttribute(query)
     },
 
-    onSubmit: () => (event: React.FormEvent<HTMLFormElement>) => {
+    onSubmit: ({ action }) => (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
       const formData = new FormData(event.currentTarget)
       action.submitCondition({

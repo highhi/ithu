@@ -1,12 +1,18 @@
 import { MusicStore } from './MusicStore'
-import UserStore from './UserStore'
+import UserStore, { User } from './UserStore'
 
 export type Stores = {
   musicStore: MusicStore
   userStore: UserStore
 }
 
-export const stores: Stores = {
-  musicStore: new MusicStore(),
-  userStore: new UserStore(),
+export type InitialState = {
+  userState: User
+}
+
+export default function getStores(initialState: InitialState) {
+  return {
+    musicStore: new MusicStore(),
+    userStore: new UserStore(initialState.userState),
+  }
 }

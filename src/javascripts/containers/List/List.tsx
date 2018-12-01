@@ -1,11 +1,11 @@
-import { observer } from 'mobx-react'
-import { compose, withProps } from 'recompose'
+import { inject, observer } from 'mobx-react'
+import { compose } from 'recompose'
 import List, { Props } from '../../components/contexts/List/List'
-import { stores } from '../../stores'
+import { InjectProps } from '../../types'
 
 export default compose<Props, {}>(
-  withProps(() => ({
-    store: stores.musicStore,
+  inject<InjectProps, {}, any, {}>(({ stores }) => ({
+    musicStore: stores.musicStore,
   })),
   observer
 )(List)

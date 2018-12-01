@@ -1,9 +1,12 @@
 import { navigate, Router } from '@reach/router'
+import { Provider } from 'mobx-react'
 import * as React from 'react'
 import { render } from 'react-dom'
+import createAction from './actions'
 import Login from './components/pages/Login/Login'
 import Music from './components/pages/Music/Music'
 import firebase from './libs/firebase'
+import getStores from './stores'
 
 firebase
   .auth()
@@ -18,10 +21,15 @@ firebase
     console.error(error)
   })
 
+const stores = getStores({ userState: {} })
+const action = createAction(stores)
+
 render(
-  <Router>
-    <Music path="/" />
-    <Login path="login" />
-  </Router>,
-  document.getElementById('app') as HTMLElement
+  <Provider stores={stores} action={action}>
+    <Router>
+      <Music path="/" />
+      <Login path="login" />
+    </Router>
+  </Provider>,
+  document.getElementById('app')
 )
