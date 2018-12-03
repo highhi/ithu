@@ -1,5 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const merge = require('webpack-merge')
 const ManifestPlugin = require('webpack-manifest-plugin')
@@ -96,7 +95,6 @@ const common = {
     new ManifestPlugin({
       fileName: path.resolve(__dirname, 'src', 'server', 'manifest.json')
     }),
-    new webpack.HotModuleReplacementPlugin(),
   ]
 }
 
