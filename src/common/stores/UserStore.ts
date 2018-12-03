@@ -1,5 +1,4 @@
 import { action, decorate, observable } from 'mobx'
-import firebase from '../libs/firebase'
 
 export type User = {
   id?: string
@@ -16,11 +15,6 @@ export default class UserStore {
     this.id = initailState.id
     this.name = initailState.name
     this.image = initailState.image
-
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) return
-      this.login({ id: user.uid, name: user.displayName!, image: user.photoURL! })
-    })
   }
 
   login = (user: Required<User>) => {

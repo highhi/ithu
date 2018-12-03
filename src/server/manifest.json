@@ -1,0 +1,7 @@
+{
+  "javascripts/main.js": "javascripts/main.js",
+  "javascripts/react.js": "javascripts/react.js",
+  "javascripts/runtime.js": "javascripts/runtime.js",
+  "javascripts/vendor.js": "javascripts/vendor.js",
+  "stylesheets/style.css": "stylesheets/style.css"
+}

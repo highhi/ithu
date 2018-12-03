@@ -2,7 +2,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "target": "esnext",
+    "module": "esnext",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "lib": ["esnext", "dom"],
     "jsx": "react",
     "allowJs": true,

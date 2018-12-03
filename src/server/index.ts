@@ -1,7 +1,7 @@
 'use strict'
 
 require('dotenv').config()
-const runServer = require('./server')
+import runServer from './server'
 
 runServer()
 

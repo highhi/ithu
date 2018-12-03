@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const merge = require('webpack-merge')
 const ManifestPlugin = require('webpack-manifest-plugin')
@@ -36,7 +37,10 @@ const common = {
   mode: isProd ? 'production' : 'development',
 
   entry: {
-    [js('main')]: path.resolve(SRC, 'javascripts', 'index.tsx'),
+    [js('main')]: [
+      'webpack-hot-middleware/client',
+      path.resolve(SRC, 'client', 'javascripts', 'index.tsx')
+    ],
   },
 
   output: {
@@ -83,15 +87,16 @@ const common = {
   },
 
   plugins: [
+    new Dotenv(),
     new CopyWebpackPlugin([{
-      from: path.resolve(SRC, 'stylesheets', 'style.css'),
+      from: path.resolve(SRC, 'client', 'stylesheets', 'style.css'),
       to: path.resolve(DIST, 'stylesheets', '[name].css'),
       force: true,
     }]),
     new ManifestPlugin({
-      fileName: path.resolve(__dirname, 'server', 'manifest.json')
+      fileName: path.resolve(__dirname, 'src', 'server', 'manifest.json')
     }),
-    new Dotenv()
+    new webpack.HotModuleReplacementPlugin(),
   ]
 }
 
