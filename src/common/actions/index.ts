@@ -1,5 +1,5 @@
-import firebase from '../libs/firebase'
-import { Stores } from '../stores'
+import * as firebase from '../libs/firebase'
+import { Store } from '../stores'
 import { ItemStore } from '../stores/ItemStore'
 import { ItemParams } from '../stores/MusicStore'
 import { apiClient } from '../utils'
@@ -15,51 +15,59 @@ export type Action = {
   playMusic(nextTrackId: number): void
   submitCondition(params: ConditionParams): void
   logout(): void
+  onAuthStateChanged(): void
 }
 
-export default (stores: Stores): Action => {
-  return {
-    changeTerm(query: string) {
-      stores.musicStore.setTerm(query)
-    },
+export function changeTerm(store: Store, query: string) {
+  store.music.setTerm(query)
+}
 
-    changeAttribute(category: string) {
-      stores.musicStore.setAttribute(category)
-    },
+export async function logout(store: Store) {
+  try {
+    await firebase.signOut()
+    store.user.logout()
+  } catch (err) {
+    console.error(err)
+  }
+}
 
-    // TODO: 条件分岐をもうちょっと綺麗にしたい
-    playMusic(nextTrackId: number) {
-      const current = stores.musicStore.currentTrack()
-      const next = stores.musicStore.itemMap.get(nextTrackId) as ItemStore
+export async function onAuthStateChanged(store: Store) {
+  try {
+    const user = await firebase.onAuthStateChanged()
+    if (!user) return
+    store.user.login({ id: user.uid, name: user.displayName!, image: user.photoURL! })
+  } catch (err) {
+    console.log(err)
+  }
+}
 
-      if (current.id === next.id) {
-        next.togglePlay()
-        return stores.musicStore.setTrackId(-1)
-      }
+export function changeAttribute(store: Store, category: string) {
+  store.music.setAttribute(category)
+}
 
-      current.togglePlay()
-      next.togglePlay()
-      stores.musicStore.setTrackId(next.id)
-    },
+// TODO: 条件分岐をもうちょっと綺麗にしたい
+export function playMusic(store: Store, nextTrackId: number) {
+  const current = store.music.currentTrack()
+  const next = store.music.itemMap.get(nextTrackId) as ItemStore
 
-    async submitCondition(params: ConditionParams) {
-      try {
-        const { query, category } = params
-        const items = await apiClient.get(`/music/${encodeURIComponent(query)}/${encodeURIComponent(category)}`)
-        stores.musicStore.setItems(createItemStores(items))
-      } catch (err) {
-        console.error(err)
-      }
-    },
+  current.togglePlay()
 
-    async logout() {
-      try {
-        await firebase.auth().signOut()
-        stores.userStore.logout()
-      } catch (err) {
-        console.error(err)
-      }
-    },
+  if (current.id === next.id) {
+    next.togglePlay()
+    return store.music.setTrackId(-1)
+  }
+
+  next.togglePlay()
+  store.music.setTrackId(next.id)
+}
+
+export async function submitCondition(store: Store, params: ConditionParams) {
+  try {
+    const { query, category } = params
+    const items = await apiClient.get(`/music/${encodeURIComponent(query)}/${encodeURIComponent(category)}`)
+    store.music.setItems(createItemStores(items))
+  } catch (err) {
+    console.error(err)
   }
 }
 

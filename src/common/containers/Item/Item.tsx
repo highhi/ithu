@@ -1,18 +1,20 @@
 import { inject, observer } from 'mobx-react'
-import { compose, withHandlers } from 'recompose'
-import { Action } from '../../actions'
-import Item, { Handlers, OuterProps, Props } from '../../components/contexts/Item/Item'
-import { InjectProps } from '../../types'
+import React from 'react'
+import { playMusic } from '../../actions'
+import Item from '../../components/contexts/Item/Item'
+import { StoreWithAction } from '../../stores'
+import { ItemStore } from '../../stores/ItemStore'
 
-export default compose<Props, OuterProps>(
-  inject<InjectProps, {}, any, {}>(({ action }) => ({
-    action,
-  })),
-  withHandlers<OuterProps & { action: Action }, Handlers>({
-    onClick: ({ store, action }) => (event: React.FormEvent<HTMLButtonElement>) => {
-      event.preventDefault()
-      action.playMusic(store.id)
-    },
-  }),
-  observer
-)(Item)
+const ObservebleItem = observer(Item)
+class WrapedItem extends React.Component<{ store?: StoreWithAction; item: ItemStore }, {}> {
+  render() {
+    return <ObservebleItem item={this.props.item} onClick={this.onClick} />
+  }
+
+  onClick = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    this.props.store!.actionWithValue(playMusic, this.props.item.id)
+  }
+}
+
+export default inject('store')(WrapedItem)

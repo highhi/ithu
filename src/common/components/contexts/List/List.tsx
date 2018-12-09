@@ -3,12 +3,12 @@ import Item from '../../../containers/Item/Item'
 import { MusicStore } from '../../../stores/MusicStore'
 
 export type Props = {
-  musicStore: MusicStore
+  music: MusicStore
 }
 
-const List: React.SFC<Props> = ({ musicStore }) => {
-  const items = musicStore.items.map((item) => {
-    return <Item key={item.id} store={item} />
+const List: React.SFC<Props> = ({ music }) => {
+  const items = music.items.map((item) => {
+    return <Item key={item.id} item={item} />
   })
 
   return <main>{items}</main>

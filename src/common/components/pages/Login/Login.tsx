@@ -1,19 +1,17 @@
 import React from 'react'
-import firebase from '../../../libs/firebase'
+import { currenUser, signInWithRedirect, signOut } from '../../../libs/firebase'
 import Header from '../../layouts/Header/Header'
 
-const provider = new firebase.auth.GoogleAuthProvider()
-
 function onLogin() {
-  firebase.auth().signInWithRedirect(provider)
+  signInWithRedirect()
 }
 
 function onLogout() {
-  firebase.auth().signOut()
+  signOut()
 }
 
 function onUser() {
-  console.log(firebase.auth().currentUser)
+  console.log(currenUser())
 }
 
 const Login: React.SFC<{ path: string }> = () => {

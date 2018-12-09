@@ -12,7 +12,7 @@ export type Handlers = {
 }
 
 export type InnerProps = Handlers & {
-  musicStore: MusicStore
+  music: MusicStore
 }
 
 const areas = ['input input input input"', '"cat1 cat2 cat3 cat4']
@@ -30,30 +30,30 @@ const Input = styled.input`
   background: #fff;
 `
 
-const ConditionForm: React.SFC<InnerProps> = ({ musicStore, onChangeTerm, onChangeAttribute, onSubmit }) => {
+const ConditionForm: React.SFC<InnerProps> = ({ music, onChangeTerm, onChangeAttribute, onSubmit }) => {
   return (
     <Form onSubmit={onSubmit}>
       <Grid areas={areas}>
         <GridCell area="input">
-          <Input className="queryField" name="query" type="text" value={musicStore.term} onChange={onChangeTerm} />
+          <Input className="queryField" name="query" type="text" value={music.term} onChange={onChangeTerm} />
         </GridCell>
         <GridCell area="cat1">
-          <Category category="" checked={!musicStore.attribute} onChange={onChangeAttribute}>
+          <Category category="" checked={!music.attribute} onChange={onChangeAttribute}>
             ALL
           </Category>
         </GridCell>
         <GridCell area="cat2">
-          <Category category="artistTerm" checked={musicStore.attribute === 'artistTerm'} onChange={onChangeAttribute}>
+          <Category category="artistTerm" checked={music.attribute === 'artistTerm'} onChange={onChangeAttribute}>
             Artist
           </Category>
         </GridCell>
         <GridCell area="cat3">
-          <Category category="songTerm" checked={musicStore.attribute === 'songTerm'} onChange={onChangeAttribute}>
+          <Category category="songTerm" checked={music.attribute === 'songTerm'} onChange={onChangeAttribute}>
             Track
           </Category>
         </GridCell>
         <GridCell area="cat4">
-          <Category category="albumTerm" checked={musicStore.attribute === 'albumTerm'} onChange={onChangeAttribute}>
+          <Category category="albumTerm" checked={music.attribute === 'albumTerm'} onChange={onChangeAttribute}>
             Collection
           </Category>
         </GridCell>

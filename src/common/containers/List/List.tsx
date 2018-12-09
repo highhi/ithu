@@ -1,11 +1,15 @@
 import { inject, observer } from 'mobx-react'
-import { compose } from 'recompose'
-import List, { Props } from '../../components/contexts/List/List'
-import { InjectProps } from '../../types'
+import React from 'react'
+import List from '../../components/contexts/List/List'
+import { StoreWithAction } from '../../stores'
 
-export default compose<Props, {}>(
-  inject<InjectProps, {}, any, {}>(({ stores }) => ({
-    musicStore: stores.musicStore,
-  })),
-  observer
-)(List)
+const ObservebleList = observer(List)
+class WrapedList extends React.Component<{ store?: StoreWithAction }, {}> {
+  static displayName = 'WrapedList'
+
+  render() {
+    return <ObservebleList music={this.props.store!.music} />
+  }
+}
+
+export default inject('store')(WrapedList)

@@ -14,7 +14,7 @@ export const Button = styled.button`
 `
 
 type Props = {
-  userStore: UserStore
+  user: UserStore
 }
 
 export type Handlers = {
@@ -23,14 +23,14 @@ export type Handlers = {
 
 export type InnerProps = Props & Handlers
 
-const User: React.SFC<InnerProps> = ({ userStore, logout }) => {
-  if (!userStore.id) {
+const User: React.SFC<InnerProps> = ({ user, logout }) => {
+  if (!user.id) {
     return <Link to="/login">login</Link>
   }
 
   return (
     <button type="button" onClick={logout}>
-      <UserImage src={userStore.image!} alt={userStore.name!} width="32" height="32" />
+      <UserImage src={user.image!} alt={user.name!} width="32" height="32" />
     </button>
   )
 }

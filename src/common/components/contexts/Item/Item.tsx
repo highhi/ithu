@@ -8,7 +8,7 @@ import PlayButton from '../../selectors/PlayButton/PlayButton'
 const columns = ['8%', '7%', '20%', '20%', '25%', '1fr', '10%']
 
 export type OuterProps = {
-  store: ItemStore
+  item: ItemStore
 }
 
 export type Handlers = {
@@ -26,20 +26,20 @@ const GridItem = styled(Grid)`
   }
 `
 
-const Item: React.SFC<OuterProps & Handlers> = ({ store, onClick }) => {
+const Item: React.SFC<OuterProps & Handlers> = ({ item, onClick }) => {
   return (
     <GridItem columns={columns} alignItems="center" rowGap="10px" columnGap="10px">
       <GridCell justify="center">
-        <PlayButton isPlaying={store.isPlaying} onClick={onClick} />
+        <PlayButton isPlaying={item.isPlaying} onClick={onClick} />
       </GridCell>
       <div>
-        <img src={store.cover} alt="" width="60" height="60" />
+        <img src={item.cover} alt="" width="60" height="60" />
       </div>
-      <div>{store.track}</div>
-      <div>{store.artist}</div>
-      <div>{store.collection}</div>
-      <div>{store.trackPrice}</div>
-      <div>{store.collectionPrice}</div>
+      <div>{item.track}</div>
+      <div>{item.artist}</div>
+      <div>{item.collection}</div>
+      <div>{item.trackPrice}</div>
+      <div>{item.collectionPrice}</div>
     </GridItem>
   )
 }

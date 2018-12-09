@@ -4,19 +4,17 @@ import { Provider } from 'mobx-react'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { ServerStyleSheet } from 'styled-components'
-import createAction from '../../../common/actions'
 import App from '../../../common/components/pages/App/App'
-import getStores from '../../../common/stores'
+import getStore from '../../../common/stores'
 import { renderFullPage } from '../../renderFullPage'
 
 export default (req: Request, res: Response) => {
   const initalState = { userState: {} }
-  const stores = getStores(initalState)
-  const action = createAction(stores)
+  const store = getStore(initalState)
   const sheet = new ServerStyleSheet()
 
   const Jsx = (
-    <Provider stores={stores} action={action}>
+    <Provider store={store}>
       <ServerLocation url={req.url}>
         <App />
       </ServerLocation>

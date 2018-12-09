@@ -1,28 +1,25 @@
 import { inject, observer } from 'mobx-react'
 import React from 'react'
-import { compose, lifecycle, withHandlers } from 'recompose'
-import { Action } from '../../actions'
-import User, { Handlers, InnerProps } from '../../components/contexts/User/User'
-import firebase from '../../libs/firebase'
-import { InjectProps } from '../../types'
+import { logout, onAuthStateChanged } from '../../actions'
+import User from '../../components/contexts/User/User'
+import { StoreWithAction } from '../../stores'
 
-export default compose<InnerProps, {}>(
-  inject<InjectProps, {}, any, {}>(({ stores }) => ({
-    userStore: stores.userStore,
-  })),
-  lifecycle<InnerProps, {}>({
-    componentDidMount() {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (!user) return
-        this.props.userStore.login({ id: user.uid, name: user.displayName!, image: user.photoURL! })
-      })
-    },
-  }),
-  withHandlers<{ action: Action }, Handlers>({
-    logout: ({ action }) => (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault()
-      action.logout()
-    },
-  }),
-  observer
-)(User)
+const ObservebleUser = observer(User)
+export class WrapedUser extends React.Component<{ store?: StoreWithAction }, {}> {
+  static displayName = 'WrapedUser'
+
+  componentDidMount() {
+    this.props.store!.action(onAuthStateChanged)
+  }
+
+  render() {
+    return <ObservebleUser user={this.props.store!.user} logout={this.logout} />
+  }
+
+  logout = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    this.props.store!.action(logout)
+  }
+}
+
+export default inject('store')(WrapedUser)

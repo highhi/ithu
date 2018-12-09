@@ -1,32 +1,40 @@
 import { inject, observer } from 'mobx-react'
-import { compose, withHandlers } from 'recompose'
-import { Action } from '../../actions'
-import ConditionForm, { Handlers, InnerProps } from '../../components/contexts/ConditionForm/ConditionForm'
+import React from 'react'
+import { changeAttribute, changeTerm, submitCondition } from '../../actions'
+import ConditionForm from '../../components/contexts/ConditionForm/ConditionForm'
+import { StoreWithAction } from '../../stores'
 
-export default compose<InnerProps, {}>(
-  inject(({ stores, action }) => ({
-    musicStore: stores.musicStore,
-    action,
-  })),
-  withHandlers<{ action: Action }, Handlers>({
-    onChangeTerm: ({ action }) => (event: React.FormEvent<HTMLInputElement>) => {
-      const query = event.currentTarget.value.trim()
-      action.changeTerm(query)
-    },
+const ObserverbleConditionFrom = observer(ConditionForm)
+class WrapedConditionForm extends React.Component<{ store?: StoreWithAction }, {}> {
+  render() {
+    return (
+      <ObserverbleConditionFrom
+        music={this.props.store!.music}
+        onChangeTerm={this.onChangeTerm}
+        onSubmit={this.onSubmit}
+        onChangeAttribute={this.onChangeAttribute}
+      />
+    )
+  }
 
-    onChangeAttribute: ({ action }) => (event: React.FormEvent<HTMLInputElement>) => {
-      const query = event.currentTarget.value
-      action.changeAttribute(query)
-    },
+  onChangeTerm = (event: React.FormEvent<HTMLInputElement>) => {
+    const query = event.currentTarget.value.trim()
+    this.props.store!.actionWithValue(changeTerm, query)
+  }
 
-    onSubmit: ({ action }) => (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault()
-      const formData = new FormData(event.currentTarget)
-      action.submitCondition({
-        query: formData.get('query') as string,
-        category: formData.get('category') as string,
-      })
-    },
-  }),
-  observer
-)(ConditionForm)
+  onChangeAttribute = (event: React.FormEvent<HTMLInputElement>) => {
+    const query = event.currentTarget.value
+    this.props.store!.actionWithValue(changeAttribute, query)
+  }
+
+  onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    this.props.store!.actionWithValue(submitCondition, {
+      query: formData.get('query') as string,
+      category: formData.get('category') as string,
+    })
+  }
+}
+
+export default inject('store')(WrapedConditionForm)

@@ -55,7 +55,7 @@ const common = {
         use: [{
           loader: 'ts-loader'
         }],
-      }
+      },
     ]
   },
 
@@ -71,12 +71,12 @@ const common = {
           enforce: true,
           name: js('vendor')
         },
-        vendors: {
+        react: {
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
           name: js('react'),
           priority: 1,
           chunks: 'all',
-        }
+        },
       }
     }
   },
