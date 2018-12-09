@@ -15,15 +15,10 @@ export const Button = styled.button`
 
 type Props = {
   user: UserStore
-}
-
-export type Handlers = {
   logout(event: React.MouseEvent<HTMLButtonElement>): void
 }
 
-export type InnerProps = Props & Handlers
-
-const User: React.SFC<InnerProps> = ({ user, logout }) => {
+const User: React.SFC<Props> = ({ user, logout }) => {
   if (!user.id) {
     return <Link to="/login">login</Link>
   }

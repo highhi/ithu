@@ -35,7 +35,7 @@ export function signInWithRedirect() {
   firebase.auth().signInWithRedirect(provider)
 }
 
-export function currenUser() {
+export function currentUser() {
   return firebase.auth().currentUser
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { currenUser, signInWithRedirect, signOut } from '../../../libs/firebase'
+import { currentUser, signInWithRedirect, signOut } from '../../../libs/firebase'
 import Header from '../../layouts/Header/Header'
 
 function onLogin() {
@@ -11,7 +11,7 @@ function onLogout() {
 }
 
 function onUser() {
-  console.log(currenUser())
+  console.log(currentUser())
 }
 
 const Login: React.SFC<{ path: string }> = () => {

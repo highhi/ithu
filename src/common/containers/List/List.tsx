@@ -3,12 +3,12 @@ import React from 'react'
 import List from '../../components/contexts/List/List'
 import { StoreWithAction } from '../../stores'
 
-const ObservebleList = observer(List)
+const ObservableList = observer(List)
 class WrapedList extends React.Component<{ store?: StoreWithAction }, {}> {
   static displayName = 'WrapedList'
 
   render() {
-    return <ObservebleList music={this.props.store!.music} />
+    return <ObservableList music={this.props.store!.music} />
   }
 }
 

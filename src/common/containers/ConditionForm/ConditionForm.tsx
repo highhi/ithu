@@ -4,11 +4,11 @@ import { changeAttribute, changeTerm, submitCondition } from '../../actions'
 import ConditionForm from '../../components/contexts/ConditionForm/ConditionForm'
 import { StoreWithAction } from '../../stores'
 
-const ObserverbleConditionFrom = observer(ConditionForm)
+const ObservableConditionFrom = observer(ConditionForm)
 class WrapedConditionForm extends React.Component<{ store?: StoreWithAction }, {}> {
   render() {
     return (
-      <ObserverbleConditionFrom
+      <ObservableConditionFrom
         music={this.props.store!.music}
         onChangeTerm={this.onChangeTerm}
         onSubmit={this.onSubmit}

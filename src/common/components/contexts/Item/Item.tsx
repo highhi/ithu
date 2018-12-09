@@ -7,15 +7,10 @@ import PlayButton from '../../selectors/PlayButton/PlayButton'
 
 const columns = ['8%', '7%', '20%', '20%', '25%', '1fr', '10%']
 
-export type OuterProps = {
+export type Props = {
   item: ItemStore
-}
-
-export type Handlers = {
   onClick(event: React.FormEvent<HTMLButtonElement>): void
 }
-
-export type Props = OuterProps & Handlers
 
 const GridItem = styled(Grid)`
   border-top: 1px solid #d3d3d3;
@@ -26,7 +21,7 @@ const GridItem = styled(Grid)`
   }
 `
 
-const Item: React.SFC<OuterProps & Handlers> = ({ item, onClick }) => {
+const Item: React.SFC<Props> = ({ item, onClick }) => {
   return (
     <GridItem columns={columns} alignItems="center" rowGap="10px" columnGap="10px">
       <GridCell justify="center">

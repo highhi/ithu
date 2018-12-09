@@ -5,10 +5,10 @@ import Item from '../../components/contexts/Item/Item'
 import { StoreWithAction } from '../../stores'
 import { ItemStore } from '../../stores/ItemStore'
 
-const ObservebleItem = observer(Item)
+const ObservableItem = observer(Item)
 class WrapedItem extends React.Component<{ store?: StoreWithAction; item: ItemStore }, {}> {
   render() {
-    return <ObservebleItem item={this.props.item} onClick={this.onClick} />
+    return <ObservableItem item={this.props.item} onClick={this.onClick} />
   }
 
   onClick = (event: React.FormEvent<HTMLButtonElement>) => {
