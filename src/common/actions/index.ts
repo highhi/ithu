@@ -50,13 +50,12 @@ export function playMusic(store: Store, nextTrackId: number) {
   const current = store.music.currentTrack()
   const next = store.music.itemMap.get(nextTrackId) as ItemStore
 
-  current.togglePlay()
-
   if (current.id === next.id) {
     next.togglePlay()
     return store.music.setTrackId(-1)
   }
 
+  current.togglePlay()
   next.togglePlay()
   store.music.setTrackId(next.id)
 }
