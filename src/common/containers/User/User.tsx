@@ -5,8 +5,8 @@ import User from '../../components/contexts/User/User'
 import { StoreWithAction } from '../../stores'
 
 const ObservableUser = observer(User)
-export class WrapedUser extends React.Component<{ store?: StoreWithAction }, {}> {
-  static displayName = 'WrapedUser'
+export class WrappedUser extends React.Component<{ store?: StoreWithAction }, {}> {
+  static displayName = 'WrappedUser'
 
   componentDidMount() {
     this.props.store!.action(onAuthStateChanged)
@@ -22,4 +22,4 @@ export class WrapedUser extends React.Component<{ store?: StoreWithAction }, {}>
   }
 }
 
-export default inject('store')(WrapedUser)
+export default inject('store')(WrappedUser)

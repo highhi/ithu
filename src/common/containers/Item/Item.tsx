@@ -6,7 +6,7 @@ import { StoreWithAction } from '../../stores'
 import { ItemStore } from '../../stores/ItemStore'
 
 const ObservableItem = observer(Item)
-class WrapedItem extends React.Component<{ store?: StoreWithAction; item: ItemStore }, {}> {
+class WrappedItem extends React.Component<{ store?: StoreWithAction; item: ItemStore }, {}> {
   render() {
     return <ObservableItem item={this.props.item} onClick={this.onClick} />
   }
@@ -17,4 +17,4 @@ class WrapedItem extends React.Component<{ store?: StoreWithAction; item: ItemSt
   }
 }
 
-export default inject('store')(WrapedItem)
+export default inject('store')(WrappedItem)
