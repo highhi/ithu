@@ -5,7 +5,7 @@ import ConditionForm from '../../components/contexts/ConditionForm/ConditionForm
 import { StoreWithAction } from '../../stores'
 
 const ObservableConditionFrom = observer(ConditionForm)
-class WrapedConditionForm extends React.Component<{ store?: StoreWithAction }, {}> {
+class WrappedConditionForm extends React.Component<{ store?: StoreWithAction }, {}> {
   render() {
     return (
       <ObservableConditionFrom
@@ -37,4 +37,4 @@ class WrapedConditionForm extends React.Component<{ store?: StoreWithAction }, {
   }
 }
 
-export default inject('store')(WrapedConditionForm)
+export default inject('store')(WrappedConditionForm)

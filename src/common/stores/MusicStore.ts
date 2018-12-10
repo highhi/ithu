@@ -29,6 +29,11 @@ export class MusicStore {
     return Array.from(this.itemMap.values())
   }
 
+  get musicUrl(): string {
+    if (this.selectedTrackId === -1) return ''
+    return this.itemMap.get(this.selectedTrackId)!.previewUrl
+  }
+
   setItems = (items: ItemStore[]) => {
     this.itemMap.clear()
     for (const item of items) {
@@ -65,4 +70,5 @@ decorate(MusicStore, {
   setAttribute: action,
   setTrackId: action,
   items: computed,
+  musicUrl: computed,
 })
