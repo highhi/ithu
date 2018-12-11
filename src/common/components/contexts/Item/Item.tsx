@@ -4,12 +4,14 @@ import { ItemStore } from '../../../stores/ItemStore'
 import { GridCell } from '../../layouts/GirdCell/GridCell'
 import { Grid } from '../../layouts/Grid/Grid'
 import PlayButton from '../../selectors/PlayButton/PlayButton'
+import Star from '../../selectors/Star/Star'
 
-const columns = ['8%', '7%', '20%', '20%', '25%', '1fr', '10%']
+const columns = ['80px', '60px', '1fr', '1fr', '1fr', '80px', '80px', '80px']
 
 export type Props = {
   item: ItemStore
-  onClick(event: React.FormEvent<HTMLButtonElement>): void
+  onPlay(event: React.FormEvent<HTMLButtonElement>): void
+  onStar(event: React.FormEvent<HTMLButtonElement>): void
 }
 
 const GridItem = styled(Grid)`
@@ -21,20 +23,23 @@ const GridItem = styled(Grid)`
   }
 `
 
-const Item: React.SFC<Props> = ({ item, onClick }) => {
+const Item: React.SFC<Props> = ({ item, onPlay, onStar }) => {
   return (
-    <GridItem columns={columns} alignItems="center" rowGap="10px" columnGap="10px">
-      <GridCell justify="center">
-        <PlayButton isPlaying={item.isPlaying} onClick={onClick} />
+    <GridItem columns={columns} alignItems="center" rowGap="10px" columnGap="20px">
+      <GridCell justify="end">
+        <PlayButton isPlaying={item.isPlaying} onClick={onPlay} />
       </GridCell>
-      <div>
+      <GridCell justify="center">
         <img src={item.cover} alt="" width="60" height="60" />
-      </div>
+      </GridCell>
       <div>{item.track}</div>
       <div>{item.artist}</div>
       <div>{item.collection}</div>
       <div>{item.trackPrice}</div>
       <div>{item.collectionPrice}</div>
+      <GridCell justify="start">
+        <Star starred={item.starred} onClick={onStar} />
+      </GridCell>
     </GridItem>
   )
 }

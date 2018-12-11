@@ -8,12 +8,17 @@ import { ItemStore } from '../../stores/ItemStore'
 const ObservableItem = observer(Item)
 class WrappedItem extends React.Component<{ store?: StoreWithAction; item: ItemStore }, {}> {
   render() {
-    return <ObservableItem item={this.props.item} onClick={this.onClick} />
+    return <ObservableItem item={this.props.item} onPlay={this.onPlay} onStar={this.onStar} />
   }
 
-  onClick = (event: React.FormEvent<HTMLButtonElement>) => {
+  onPlay = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault()
     this.props.store!.actionWithValue(playMusic, this.props.item.id)
+  }
+
+  onStar = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    this.props.item.toggleStar()
   }
 }
 

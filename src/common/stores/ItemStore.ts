@@ -21,6 +21,7 @@ export class ItemStore {
   collectionPrice: string
   previewUrl: string
   isPlaying = false
+  starred = false
 
   constructor(item: ItemParams) {
     this.id = item.id
@@ -36,9 +37,15 @@ export class ItemStore {
   togglePlay = () => {
     this.isPlaying = !this.isPlaying
   }
+
+  toggleStar = () => {
+    this.starred = !this.starred
+  }
 }
 
 decorate(ItemStore, {
   isPlaying: observable.ref,
+  starred: observable.ref,
   togglePlay: action,
+  toggleStar: action,
 })
