@@ -1,13 +1,14 @@
 import serialize from 'serialize-javascript'
-const assets = require('./manifest.json')
 
 type Prams = {
   body: string
   initialState: string
   style: string
+  assets: string
 }
 
-export const renderFullPage = ({ body, initialState, style }: Prams) => {
+export const renderFullPage = ({ body, initialState, style, assets }: Prams) => {
+
   return `<!DOCTYPE html>
     <html land="ja">
       <head>
@@ -22,10 +23,6 @@ export const renderFullPage = ({ body, initialState, style }: Prams) => {
         <link rel="preload" href="//fonts.googleapis.com/css?family=Oleo+Script" as="style" />
         <link rel="preload" href="//fonts.googleapis.com/css?family=Lato" as="style" />
         <link rel="preload" href="/stylesheets/style.css" as="style" />
-        <link rel="preload" href="/${assets['javascripts/runtime.js']}" as="script" />
-        <link rel="preload" href="/${assets['javascripts/react.js']}" as="script" />
-        <link rel="preload" href="/${assets['javascripts/vendor.js']}" as="script" />
-        <link rel="preload" href="/${assets['javascripts/main.js']}" as="script" />
         <link href="//fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet" />
         <link href="//fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
         <link rel="stylesheet" href="/stylesheets/style.css" />
@@ -34,10 +31,7 @@ export const renderFullPage = ({ body, initialState, style }: Prams) => {
       <body>
         <div id="app">${body}</div>
         <script>window.__INITIAL_STATE__=${serialize(initialState)}</script>
-        <script src="/${assets['javascripts/runtime.js']}" defer></script>
-        <script src="/${assets['javascripts/react.js']}" defer></script>
-        <script src="/${assets['javascripts/vendor.js']}" defer></script>
-        <script src="/${assets['javascripts/main.js']}" defer></script>
+        ${assets}
       </body>
     </html>
   `.trim()

@@ -9,8 +9,8 @@ import getStore from '../../../common/stores'
 import { renderFullPage } from '../../renderFullPage'
 
 export default (req: Request, res: Response) => {
-  const initalState = { userState: {} }
-  const store = getStore(initalState)
+  const initialState = { userState: {} }
+  const store = getStore(initialState)
   const sheet = new ServerStyleSheet()
 
   const Jsx = (
@@ -23,12 +23,33 @@ export default (req: Request, res: Response) => {
 
   const style = sheet.getStyleTags()
   const body = renderToString(Jsx)
+  const assets = getAssets()
 
   res.status(200).send(
     renderFullPage({
       body,
       style,
-      initialState: JSON.stringify(initalState),
+      assets,
+      initialState: JSON.stringify(initialState),
     })
   )
+}
+
+function getAssets() {
+  return (process.env.NODE_ENV === 'production' ? prodAssets() : devAssets()).map((asset) => `<script src="${asset}" defer>`).join('\n')
+}
+
+function prodAssets() {
+  const manifest = require('../../../../dist/manifest.json')
+  return [
+    manifest['javascripts/runtime.js'],
+    manifest['javascripts/firebase.js'],
+    manifest['javascripts/react.js'],
+    manifest['javascripts/vendor.js'],
+    manifest['javascripts/main.js'],
+  ]
+}
+
+function devAssets() {
+  return ['/public/main.bundle.js']
 }

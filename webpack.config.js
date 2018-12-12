@@ -44,7 +44,8 @@ const common = {
 
   output: {
     path: path.resolve(__dirname, DIST),
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: '/public/'
   },
 
   module: {
@@ -58,28 +59,6 @@ const common = {
       },
     ]
   },
-
-  optimization: {
-    runtimeChunk: {
-      name: js('runtime')
-    },
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          chunks: 'all',
-          enforce: true,
-          name: js('vendor')
-        },
-        react: {
-          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          name: js('react'),
-          priority: 1,
-          chunks: 'all',
-        },
-      }
-    }
-  },
   
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -92,9 +71,6 @@ const common = {
       to: path.resolve(DIST, 'stylesheets', '[name].css'),
       force: true,
     }]),
-    new ManifestPlugin({
-      fileName: path.resolve(__dirname, 'src', 'server', 'manifest.json')
-    }),
   ]
 }
 
