@@ -8,7 +8,6 @@ type Prams = {
 }
 
 export const renderFullPage = ({ body, initialState, style, assets }: Prams) => {
-
   return `<!DOCTYPE html>
     <html land="ja">
       <head>
@@ -22,10 +21,8 @@ export const renderFullPage = ({ body, initialState, style, assets }: Prams) => 
         <link rel="preconnect" href="//is1-ssl.mzstatic.com" />
         <link rel="preload" href="//fonts.googleapis.com/css?family=Oleo+Script" as="style" />
         <link rel="preload" href="//fonts.googleapis.com/css?family=Lato" as="style" />
-        <link rel="preload" href="/stylesheets/style.css" as="style" />
         <link href="//fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet" />
         <link href="//fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
-        <link rel="stylesheet" href="/stylesheets/style.css" />
         ${style}
       </head>
       <body>

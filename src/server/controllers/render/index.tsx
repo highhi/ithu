@@ -36,7 +36,7 @@ export default (req: Request, res: Response) => {
 }
 
 function getAssets() {
-  return (process.env.NODE_ENV === 'production' ? prodAssets() : devAssets()).map((asset) => `<script src="${asset}" defer>`).join('\n')
+  return (process.env.NODE_ENV === 'production' ? prodAssets() : devAssets()).map((asset) => `<script src="${asset}" defer></script>`).join('\n')
 }
 
 function prodAssets() {
@@ -51,5 +51,5 @@ function prodAssets() {
 }
 
 function devAssets() {
-  return ['/public/main.bundle.js']
+  return ['/public/main.js']
 }

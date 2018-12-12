@@ -1,6 +1,7 @@
 'use strict'
 
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
 function js(filename) {
@@ -8,6 +9,10 @@ function js(filename) {
 }
 
 const config = {
+  entry: {
+    [js('main')]: path.resolve(__dirname, 'src', 'client', 'javascripts', 'index.tsx'),
+  },
+
   output: {    
     filename: '[name].[contenthash].js',
   },

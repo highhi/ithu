@@ -1,11 +1,6 @@
 const path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const merge = require('webpack-merge')
-const ManifestPlugin = require('webpack-manifest-plugin')
 const Dotenv = require('dotenv-webpack')
-
-const SRC = path.resolve(__dirname, 'src')
-const DIST = path.resolve(__dirname, 'dist')
 
 const isProd = process.env.NODE_ENV === 'production'
 const config = isProd ? require('./webpack.prod.config') : require('./webpack.dev.config')
@@ -28,22 +23,11 @@ const config = isProd ? require('./webpack.prod.config') : require('./webpack.de
 //   ]
 // }
 
-function js(filename) {
-  return `javascripts/${filename}`
-}
-
 const common = {
   mode: isProd ? 'production' : 'development',
 
-  entry: {
-    [js('main')]: [
-      'webpack-hot-middleware/client',
-      path.resolve(SRC, 'client', 'javascripts', 'index.tsx')
-    ],
-  },
-
   output: {
-    path: path.resolve(__dirname, DIST),
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     publicPath: '/public/'
   },
@@ -66,11 +50,6 @@ const common = {
 
   plugins: [
     new Dotenv(),
-    new CopyWebpackPlugin([{
-      from: path.resolve(SRC, 'client', 'stylesheets', 'style.css'),
-      to: path.resolve(DIST, 'stylesheets', '[name].css'),
-      force: true,
-    }]),
   ]
 }
 
