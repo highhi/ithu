@@ -1,12 +1,12 @@
 import fetch from 'isomorphic-unfetch'
 
 export const apiClient = {
-  get(path: string) {
+  async get(path: string) {
     const error = new Error()
     return fetch(`/api${path}`).then((res) => {
       if (!res.ok) {
         error.message = `${res.status}: ${res.statusText}`
-        throw error
+        return Promise.reject(error)
       }
       return res.json()
     })
@@ -25,7 +25,7 @@ export const apiClient = {
     }).then((res) => {
       if (!res.ok) {
         error.message = `${res.status}: ${res.statusText}`
-        throw error
+        return Promise.reject(error)
       }
       return res.json()
     })

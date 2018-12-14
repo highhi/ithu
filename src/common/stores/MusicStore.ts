@@ -53,9 +53,9 @@ export class MusicStore {
     this.selectedTrackId = trackId
   }
 
-  currentTrack = (): { id: number; togglePlay: () => void } => {
+  currentTrack = (): { id: number; togglePlaying: () => void } => {
     const itemStore = this.itemMap.get(this.selectedTrackId)
-    if (!itemStore) return { id: INITIAL_TRACK_ID, togglePlay: noop }
+    if (!itemStore) return { id: INITIAL_TRACK_ID, togglePlaying: noop }
     return itemStore
   }
 }

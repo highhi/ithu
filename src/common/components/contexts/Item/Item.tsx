@@ -1,6 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { ItemStore } from '../../../stores/ItemStore'
+import UserStore from '../../../stores/UserStore'
 import { GridCell } from '../../layouts/GirdCell/GridCell'
 import { Grid } from '../../layouts/Grid/Grid'
 import PlayButton from '../../selectors/PlayButton/PlayButton'
@@ -10,6 +11,7 @@ const columns = ['80px', '60px', '1fr', '1fr', '1fr', '80px', '80px', '80px']
 
 export type Props = {
   item: ItemStore
+  user: UserStore
   onPlay(event: React.FormEvent<HTMLButtonElement>): void
   onStar(event: React.FormEvent<HTMLButtonElement>): void
 }
@@ -23,7 +25,7 @@ const GridItem = styled(Grid)`
   }
 `
 
-const Item: React.SFC<Props> = ({ item, onPlay, onStar }) => {
+const Item: React.SFC<Props> = ({ item, user, onPlay, onStar }) => {
   return (
     <GridItem columns={columns} alignItems="center" rowGap="10px" columnGap="20px">
       <GridCell justify="end">
@@ -37,9 +39,7 @@ const Item: React.SFC<Props> = ({ item, onPlay, onStar }) => {
       <div>{item.collection}</div>
       <div>{item.trackPrice}</div>
       <div>{item.collectionPrice}</div>
-      <GridCell justify="start">
-        <Star starred={item.starred} onClick={onStar} />
-      </GridCell>
+      <GridCell justify="start">{user.loggedIn ? <Star starred={item.starred} onClick={onStar} /> : null}</GridCell>
     </GridItem>
   )
 }

@@ -34,18 +34,18 @@ export class ItemStore {
     this.previewUrl = item.previewUrl
   }
 
-  togglePlay = () => {
+  togglePlaying = () => {
     this.isPlaying = !this.isPlaying
   }
 
-  toggleStar = () => {
-    this.starred = !this.starred
+  changeStarred = (bool: boolean) => {
+    this.starred = bool
   }
 }
 
 decorate(ItemStore, {
   isPlaying: observable.ref,
   starred: observable.ref,
-  togglePlay: action,
-  toggleStar: action,
+  togglePlaying: action,
+  changeStarred: action,
 })

@@ -2,14 +2,14 @@ import { inject, observer } from 'mobx-react'
 import React from 'react'
 import { logout, onAuthStateChanged } from '../../actions'
 import User from '../../components/contexts/User/User'
-import { StoreWithAction } from '../../stores'
+import { Store } from '../../stores'
 
 const ObservableUser = observer(User)
-export class WrappedUser extends React.Component<{ store?: StoreWithAction }, {}> {
+export class WrappedUser extends React.Component<{ store?: Store }, {}> {
   static displayName = 'WrappedUser'
 
   componentDidMount() {
-    this.props.store!.action(onAuthStateChanged)
+    onAuthStateChanged(this.props.store!)
   }
 
   render() {
@@ -18,7 +18,7 @@ export class WrappedUser extends React.Component<{ store?: StoreWithAction }, {}
 
   logout = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    this.props.store!.action(logout)
+    logout(this.props.store!)
   }
 }
 

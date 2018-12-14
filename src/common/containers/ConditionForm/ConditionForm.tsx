@@ -2,10 +2,10 @@ import { inject, observer } from 'mobx-react'
 import React from 'react'
 import { changeAttribute, changeTerm, submitCondition } from '../../actions'
 import ConditionForm from '../../components/contexts/ConditionForm/ConditionForm'
-import { StoreWithAction } from '../../stores'
+import { Store } from '../../stores'
 
 const ObservableConditionFrom = observer(ConditionForm)
-class WrappedConditionForm extends React.Component<{ store?: StoreWithAction }, {}> {
+class WrappedConditionForm extends React.Component<{ store?: Store }, {}> {
   render() {
     return (
       <ObservableConditionFrom
@@ -19,18 +19,18 @@ class WrappedConditionForm extends React.Component<{ store?: StoreWithAction }, 
 
   onChangeTerm = (event: React.FormEvent<HTMLInputElement>) => {
     const query = event.currentTarget.value.trim()
-    this.props.store!.actionWithValue(changeTerm, query)
+    changeTerm(this.props.store!, query)
   }
 
   onChangeAttribute = (event: React.FormEvent<HTMLInputElement>) => {
     const query = event.currentTarget.value
-    this.props.store!.actionWithValue(changeAttribute, query)
+    changeAttribute(this.props.store!, query)
   }
 
   onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
-    this.props.store!.actionWithValue(submitCondition, {
+    submitCondition(this.props.store!, {
       query: formData.get('query') as string,
       category: formData.get('category') as string,
     })

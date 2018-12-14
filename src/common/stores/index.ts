@@ -6,28 +6,13 @@ export type Store = {
   user: UserStore
 }
 
-export type StoreWithAction = Store & {
-  action(callback: (store: Store) => void): void
-  actionWithValue<V>(callback: (store: Store, value: V) => void, value: V): void
-}
-
 export type InitialState = {
   userState: User
 }
 
-export default function getStore(initialState: InitialState): StoreWithAction {
-  const store = {
+export default function getStore(initialState: InitialState): Store {
+  return {
     music: new MusicStore(),
     user: new UserStore(initialState.userState),
-  }
-
-  return {
-    ...store,
-    action(callback) {
-      callback(store)
-    },
-    actionWithValue(callback, value) {
-      callback(store, value)
-    },
   }
 }
