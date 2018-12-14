@@ -11,8 +11,6 @@ initializeApp()
   try {
     const user = await getRedirectResult()
     if (!user) return
-    const jwtToken = await user.getIdToken()
-    window.localStorage.setItem('jwt_token', jwtToken)
     navigate('/')
   } catch (err) {
     console.error(err)
