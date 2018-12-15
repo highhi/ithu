@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "src",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
@@ -15,7 +16,10 @@
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@common/*": ["common/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": [
@@ -23,5 +27,5 @@
     "**/__tests__",
     "**/*.test.ts",
     "**/*.test.tsx"
-  ]
+  ],
 }

@@ -46,6 +46,9 @@ const common = {
   
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      '@common': path.resolve(__dirname, 'src', 'common'),
+    }
   },
 
   plugins: [
