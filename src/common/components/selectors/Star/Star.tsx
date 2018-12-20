@@ -1,6 +1,6 @@
 import React from 'react'
 
-type Props = {
+export type Props = {
   starred: boolean
   onClick(event: React.FormEvent<HTMLButtonElement>): void
 }

@@ -4,7 +4,6 @@ import { logout, onAuthStateChanged } from '../../actions'
 import User from '../../components/contexts/User/User'
 import { Store } from '../../stores'
 
-const ObservableUser = observer(User)
 export class WrappedUser extends React.Component<{ store?: Store }, {}> {
   static displayName = 'WrappedUser'
 
@@ -13,7 +12,7 @@ export class WrappedUser extends React.Component<{ store?: Store }, {}> {
   }
 
   render() {
-    return <ObservableUser user={this.props.store!.user} logout={this.logout} />
+    return <User user={this.props.store!.user} logout={this.logout} />
   }
 
   logout = (event: React.MouseEvent<HTMLButtonElement>) => {

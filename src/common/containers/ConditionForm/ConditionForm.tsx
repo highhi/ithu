@@ -1,14 +1,13 @@
-import { inject, observer } from 'mobx-react'
+import { inject } from 'mobx-react'
 import React from 'react'
 import { changeAttribute, changeTerm, submitCondition } from '../../actions'
 import ConditionForm from '../../components/contexts/ConditionForm/ConditionForm'
 import { Store } from '../../stores'
 
-const ObservableConditionFrom = observer(ConditionForm)
 class WrappedConditionForm extends React.Component<{ store?: Store }, {}> {
   render() {
     return (
-      <ObservableConditionFrom
+      <ConditionForm
         music={this.props.store!.music}
         onChangeTerm={this.onChangeTerm}
         onSubmit={this.onSubmit}

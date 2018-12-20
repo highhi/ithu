@@ -1,19 +1,21 @@
+import { ItemParams } from '@common/stores/MusicStore'
 import * as React from 'react'
 import styled from 'styled-components'
-import { ItemStore } from '../../../stores/ItemStore'
-import UserStore from '../../../stores/UserStore'
 import { GridCell } from '../../layouts/GirdCell/GridCell'
 import { Grid } from '../../layouts/Grid/Grid'
 import PlayButton from '../../selectors/PlayButton/PlayButton'
-import Star from '../../selectors/Star/Star'
 
 const columns = ['80px', '60px', '1fr', '1fr', '1fr', '80px', '80px', '80px']
 
 export type Props = {
-  item: ItemStore
-  user: UserStore
+  isPlaying: boolean
+  cover: ItemParams['cover']
+  track: ItemParams['track']
+  artist: ItemParams['artist']
+  collection: ItemParams['collection']
+  trackPrice: ItemParams['trackPrice']
+  collectionPrice: ItemParams['collectionPrice']
   onPlay(event: React.FormEvent<HTMLButtonElement>): void
-  onStar(event: React.FormEvent<HTMLButtonElement>): void
 }
 
 const GridItem = styled(Grid)`
@@ -25,21 +27,21 @@ const GridItem = styled(Grid)`
   }
 `
 
-const Item: React.SFC<Props> = ({ item, user, onPlay, onStar }) => {
+const Item: React.SFC<Props> = ({ isPlaying, cover, track, artist, collection, trackPrice, collectionPrice, onPlay, children }) => {
   return (
     <GridItem columns={columns} alignItems="center" rowGap="10px" columnGap="20px">
       <GridCell justify="end">
-        <PlayButton isPlaying={item.isPlaying} onClick={onPlay} />
+        <PlayButton isPlaying={isPlaying} onClick={onPlay} />
       </GridCell>
       <GridCell justify="center">
-        <img src={item.cover} alt="" width="60" height="60" />
+        <img src={cover} alt="" width="60" height="60" />
       </GridCell>
-      <div>{item.track}</div>
-      <div>{item.artist}</div>
-      <div>{item.collection}</div>
-      <div>{item.trackPrice}</div>
-      <div>{item.collectionPrice}</div>
-      <GridCell justify="start">{user.loggedIn ? <Star starred={item.starred} onClick={onStar} /> : null}</GridCell>
+      <div>{track}</div>
+      <div>{artist}</div>
+      <div>{collection}</div>
+      <div>{trackPrice}</div>
+      <div>{collectionPrice}</div>
+      <GridCell justify="start">{children}</GridCell>
     </GridItem>
   )
 }

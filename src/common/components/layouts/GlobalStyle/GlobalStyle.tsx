@@ -20,4 +20,8 @@ export default createGlobalStyle`
   img {
     vertical-align: top;
   }
+
+  ul {
+    list-style: none;
+  }
 `

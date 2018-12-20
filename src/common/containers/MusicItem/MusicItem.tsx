@@ -1,11 +1,10 @@
-import { inject, observer } from 'mobx-react'
+import { inject } from 'mobx-react'
 import React from 'react'
 import { addFavorite, onFavoritesSnapShot, playMusic, removeFavorite } from '../../actions'
-import Item from '../../components/contexts/Item/Item'
+import MusicItem from '../../components/contexts/MusicItem/MusicItem'
 import { Store } from '../../stores'
 import { ItemStore } from '../../stores/ItemStore'
 
-const ObservableItem = observer(Item)
 class WrappedItem extends React.Component<{ store?: Store; item: ItemStore }, {}> {
   private unsubscribe!: () => void
 
@@ -18,7 +17,7 @@ class WrappedItem extends React.Component<{ store?: Store; item: ItemStore }, {}
   }
 
   render() {
-    return <ObservableItem item={this.props.item} user={this.props.store!.user} onPlay={this.onPlay} onStar={this.onStar} />
+    return <MusicItem item={this.props.item} user={this.props.store!.user} onPlay={this.onPlay} onStar={this.onStar} />
   }
 
   onPlay = (event: React.FormEvent<HTMLButtonElement>) => {

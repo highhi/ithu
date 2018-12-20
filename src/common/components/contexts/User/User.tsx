@@ -1,4 +1,5 @@
 import { Link } from '@reach/router'
+import { observer } from 'mobx-react'
 import * as React from 'react'
 import styled from 'styled-components'
 import UserStore from '../../../stores/UserStore'
@@ -30,4 +31,4 @@ const User: React.SFC<Props> = ({ user, logout }) => {
   )
 }
 
-export default User
+export default observer(User)

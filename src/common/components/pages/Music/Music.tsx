@@ -1,7 +1,7 @@
-import * as React from 'react'
+import React from 'react'
 import Audio from '../../../containers/Audio/Audio'
 import ConditionForm from '../../../containers/ConditionForm/ConditionForm'
-import List from '../../../containers/List/List'
+import MusicList from '../../../containers/MusicList/MusicList'
 import Header from '../../layouts/Header/Header'
 
 const Music: React.SFC<{ path: string }> = () => {
@@ -10,7 +10,7 @@ const Music: React.SFC<{ path: string }> = () => {
       <Header>
         <ConditionForm />
       </Header>
-      <List />
+      <MusicList />
       <Audio />
     </>
   )

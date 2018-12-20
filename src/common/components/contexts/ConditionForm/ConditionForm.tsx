@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react'
 import * as React from 'react'
 import styled from 'styled-components'
 import { MusicStore } from '../../../stores/MusicStore'
@@ -62,4 +63,4 @@ const ConditionForm: React.SFC<InnerProps> = ({ music, onChangeTerm, onChangeAtt
   )
 }
 
-export default ConditionForm
+export default observer(ConditionForm)
