@@ -113,6 +113,26 @@ export function onFavoritesSnapShot(store: Store, item: { id: number; changeStar
   )
 }
 
+export async function subscribeFavoriteCollection(store: Store) {
+  try {
+    let itemStores: ItemStore[] = []
+    const user = await firebase.onAuthStateChanged()
+    if (!user) return () => {}
+    return firebase
+      .db()
+      .collection('favorites')
+      .doc(user.uid)
+      .collection('music')
+      .onSnapshot((snapshot) => {
+        snapshot.forEach((doc) => itemStores.push(new ItemStore(doc.data() as ItemParams)))
+        store.favorite.setItems(itemStores)
+      })
+  } catch (err) {
+    console.error(err)
+    return () => {}
+  }
+}
+
 function createItemStores(items: ItemParams[]): ItemStore[] {
   return items.map((item) => new ItemStore(item))
 }
